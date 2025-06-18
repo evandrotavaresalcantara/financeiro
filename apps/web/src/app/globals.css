@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    position: absolute;
+    background-color: #27272a;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar:horizontal {
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #222;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+.red .mantine-TextInput-wrapper > .mantine-TextInput-input {
+    color: rgb(248, 113, 113);
+}
+
+.green .mantine-TextInput-wrapper > .mantine-TextInput-input {
+    color: rgb(74, 222, 128);
+}
+
+.tabler-icon {
+    stroke-width: 1;
+}

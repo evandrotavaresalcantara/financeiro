@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS contas (
+    id UUID PRIMARY KEY,
+    usuario_id TEXT REFERENCES usuarios(id) ON DELETE CASCADE,
+    descricao VARCHAR(255) NOT NULL,
+    banco VARCHAR(255) NOT NULL,
+    cor VARCHAR(50), 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP 
+);

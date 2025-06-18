@@ -1,0 +1,10 @@
+# Diretórios
+/.next/
+node_modules
+
+
+# Arquivos
+.env
+.env.local
+package-lock.json
+

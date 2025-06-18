@@ -1,0 +1,20 @@
+{
+  "name": "poupig-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build:utils": "npm run build --workspace=utils",
+    "build:core": "npm run build --workspace=core",
+    "build:adapters": "npm run build --workspace=adapters",
+    "build:base": "npm run build --workspace=utils && npm run build --workspace=core && npm run build --workspace=adapters",
+    "build:api": "npm run build --workspace=api",
+    "build:web": "npm run build --workspace=web",
+    "build:all": "npm run --workspaces --if-present build",
+    "start:api": "npm run start --workspace=api",
+    "start:web": "npm run start --workspace=web",
+    "dev:api": "npm run dev --workspace=api"
+  }
+}

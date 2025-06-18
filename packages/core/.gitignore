@@ -1,0 +1,8 @@
+# Diretórios
+node_modules
+dist
+coverage
+# Arquivos
+.env
+.env.local
+package-lock.json

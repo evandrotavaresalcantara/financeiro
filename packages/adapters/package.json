@@ -1,0 +1,23 @@
+{
+  "name": "adapters",
+  "version": "1.3.0",
+  "description": "",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest --watchAll --collectCoverage",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "Leonardo Moura Leitão",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint-config": "*",
+    "typescript-config": "*"
+  },
+  "dependencies": {
+    "core": "file:../core"
+  }
+}
