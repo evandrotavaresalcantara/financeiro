@@ -6,15 +6,13 @@
     "apps/*"
   ],
   "scripts": {
-    "build:utils": "npm run build --workspace=utils",
-    "build:core": "npm run build --workspace=core",
-    "build:adapters": "npm run build --workspace=adapters",
     "build:base": "npm run build --workspace=utils && npm run build --workspace=core && npm run build --workspace=adapters",
     "build:api": "npm run build --workspace=api",
     "build:web": "npm run build --workspace=web",
     "build:all": "npm run --workspaces --if-present build",
     "start:api": "npm run start --workspace=api",
     "start:web": "npm run start --workspace=web",
-    "dev:api": "npm run dev --workspace=api"
-  }
+    "dev": "npm run dev --workspace=web & npm run dev --workspace=api "
+  },
+  "packageManager": "yarn@4.9.2+sha512.1fc009bc09d13cfd0e19efa44cbfc2b9cf6ca61482725eb35bbc5e257e093ebf4130db6dfe15d604ff4b79efd8e1e8e99b25fa7d0a6197c9f9826358d4d65c3c"
 }

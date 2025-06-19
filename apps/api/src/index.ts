@@ -1,6 +1,6 @@
-import cors, { CorsOptions } from "cors";
+import "./setup";
 import express, { NextFunction, Request, Response } from "express";
-import dotenv from "dotenv";
+import cors, { CorsOptions } from "cors";
 import ContaRepositorioPgPrismaAdapter from "./adapters/database/ContaRepositorioPgPrismaAdapter";
 import CartaoRepositorioPgPrismaAdapter from "./adapters/database/CartaoRepositorioPgPrismaAdapter";
 import UsuarioRepositorioPgPrismaAdapter from "./adapters/database/UsuarioRepositorioPgPrismaAdapter";
@@ -49,13 +49,10 @@ import EventoExcluirStoreController from "./controllers/evento/EventoExcluir";
 import PublicadorEventoRabbitMQ from "./adapters/evento/PublicadorEventoRabbitMQ";
 import { AtualizarFaturas, AtualizarSaldos, ConsultarPorEmail } from "core";
 
-dotenv.config();
-const port = process.env.PORT || 4000;
-const env = process.env.NODE_ENV || "production";
 const corsOrigin = process.env.CORS_ORIGIN;
 
 // Configuração Ambiente ----------------------------------------------
-console.log(`🟢 ENVIRONMENT: ${env} 🟢`);
+console.log(`🟢 ENVIRONMENT: ${process.env.NODE_ENV} 🟢`);
 
 // Inicia Servidor Express ------------------------------------------
 const app = express();
@@ -71,7 +68,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.listen(process.env.PORT || 4000, () => {
-  console.log(`🔥 Server is running on port ${port}`);
+  console.log(`🔥 Server is running on port ${process.env.PORT}`);
 });
 
 // ROTA PRINCIPAL - V1 ------------------------------------
@@ -117,15 +114,9 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
 
 const conexaoPrisma = new PrismaClient();
 
-const repositorioContaPrisma = new ContaRepositorioPgPrismaAdapter(
-  conexaoPrisma,
-);
-const repositorioCartaoPrisma = new CartaoRepositorioPgPrismaAdapter(
-  conexaoPrisma,
-);
-const repositorioUsuarioPrisma = new UsuarioRepositorioPgPrismaAdapter(
-  conexaoPrisma,
-);
+const repositorioContaPrisma = new ContaRepositorioPgPrismaAdapter(conexaoPrisma);
+const repositorioCartaoPrisma = new CartaoRepositorioPgPrismaAdapter(conexaoPrisma);
+const repositorioUsuarioPrisma = new UsuarioRepositorioPgPrismaAdapter(conexaoPrisma);
 
 const canalEventosRabbitMQ = new CanalEventosRabbitMQ();
 const publicadorEvento = new PublicadorEventoRabbitMQ(canalEventosRabbitMQ);
@@ -159,103 +150,31 @@ consumidorEventoRabbitMq.iniciar();
 // DAL CONTROLLERS -------------------------------------------------------------
 
 //--------------------------------------------------------
-new CategoriaBuscarPoridStoreController(
-  v1Router,
-  categoriasDAL,
-  checkAuth(consultarPorEmail),
-);
-new CategoriaConsultarStoreController(
-  v1Router,
-  categoriasDAL,
-  checkAuth(consultarPorEmail),
-);
-new CategoriaExcluirStoreController(
-  v1Router,
-  categoriasDAL,
-  checkAuth(consultarPorEmail),
-);
-new CategoriaExisteStoreController(
-  v1Router,
-  categoriasDAL,
-  checkAuth(consultarPorEmail),
-);
-new CategoriaSalvarStoreController(
-  v1Router,
-  categoriasDAL,
-  checkAuth(consultarPorEmail),
-);
-new CategoriaSalvarAtribsStoreController(
-  v1Router,
-  categoriasDAL,
-  checkAuth(consultarPorEmail),
-);
-new CategoriaSalvarTodasStoreController(
-  v1Router,
-  categoriasDAL,
-  checkAuth(consultarPorEmail),
-);
+new CategoriaBuscarPoridStoreController(v1Router, categoriasDAL, checkAuth(consultarPorEmail));
+new CategoriaConsultarStoreController(v1Router, categoriasDAL, checkAuth(consultarPorEmail));
+new CategoriaExcluirStoreController(v1Router, categoriasDAL, checkAuth(consultarPorEmail));
+new CategoriaExisteStoreController(v1Router, categoriasDAL, checkAuth(consultarPorEmail));
+new CategoriaSalvarStoreController(v1Router, categoriasDAL, checkAuth(consultarPorEmail));
+new CategoriaSalvarAtribsStoreController(v1Router, categoriasDAL, checkAuth(consultarPorEmail));
+new CategoriaSalvarTodasStoreController(v1Router, categoriasDAL, checkAuth(consultarPorEmail));
 
 //--------------------------------------------------------
-new CartaoConsultarStoreController(
-  v1Router,
-  cartaoDAL,
-  checkAuth(consultarPorEmail),
-);
-new CartaoExisteStoreController(
-  v1Router,
-  cartaoDAL,
-  checkAuth(consultarPorEmail),
-);
-new CartaoSalvarStoreController(
-  v1Router,
-  cartaoDAL,
-  checkAuth(consultarPorEmail),
-);
-new CartaoSalvarAtribsStoreController(
-  v1Router,
-  cartaoDAL,
-  checkAuth(consultarPorEmail),
-);
+new CartaoConsultarStoreController(v1Router, cartaoDAL, checkAuth(consultarPorEmail));
+new CartaoExisteStoreController(v1Router, cartaoDAL, checkAuth(consultarPorEmail));
+new CartaoSalvarStoreController(v1Router, cartaoDAL, checkAuth(consultarPorEmail));
+new CartaoSalvarAtribsStoreController(v1Router, cartaoDAL, checkAuth(consultarPorEmail));
 
 //--------------------------------------------------------
 
-new ContaConsultarStoreController(
-  v1Router,
-  contaDAL,
-  checkAuth(consultarPorEmail),
-);
-new ContaSalvarStoreController(
-  v1Router,
-  contaDAL,
-  checkAuth(consultarPorEmail),
-);
-new ContaSalvarAtribsStoreController(
-  v1Router,
-  contaDAL,
-  checkAuth(consultarPorEmail),
-);
-new ContaBuscarPoridStoreController(
-  v1Router,
-  contaDAL,
-  checkAuth(consultarPorEmail),
-);
+new ContaConsultarStoreController(v1Router, contaDAL, checkAuth(consultarPorEmail));
+new ContaSalvarStoreController(v1Router, contaDAL, checkAuth(consultarPorEmail));
+new ContaSalvarAtribsStoreController(v1Router, contaDAL, checkAuth(consultarPorEmail));
+new ContaBuscarPoridStoreController(v1Router, contaDAL, checkAuth(consultarPorEmail));
 
 //------------------------------------------------------------------
-new UsurioSalvarStoreController(
-  v1Router,
-  usuarioDAL,
-  checkAuth(consultarPorEmail),
-);
-new UsuarioExisteStoreController(
-  v1Router,
-  usuarioDAL,
-  checkAuth(consultarPorEmail),
-);
-new UsuarioSalvarStoreController(
-  v1Router,
-  usuarioDAL,
-  checkAuth(consultarPorEmail),
-);
+new UsurioSalvarStoreController(v1Router, usuarioDAL, checkAuth(consultarPorEmail));
+new UsuarioExisteStoreController(v1Router, usuarioDAL, checkAuth(consultarPorEmail));
+new UsuarioSalvarStoreController(v1Router, usuarioDAL, checkAuth(consultarPorEmail));
 //--------------------------------------------------------
 new ExtratoMensalBuscarPoridStoreController(
   v1Router,
@@ -273,11 +192,7 @@ new ExtratoMensalBuscarTodosStoreController(
   extratoMensalDAL,
   checkAuth(consultarPorEmail),
 );
-new ExtratoMensalSalvarStoreController(
-  v1Router,
-  extratoMensalDAL,
-  checkAuth(consultarPorEmail),
-);
+new ExtratoMensalSalvarStoreController(v1Router, extratoMensalDAL, checkAuth(consultarPorEmail));
 new ExtratoMensalSalvarTodosStoreController(
   v1Router,
   extratoMensalDAL,

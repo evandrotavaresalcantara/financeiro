@@ -4,4 +4,6 @@ dist
 # Arquivos
 .env
 .env.local
+.env.dev
+.env.prod
 package-lock.json

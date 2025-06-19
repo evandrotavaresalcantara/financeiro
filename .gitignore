@@ -6,4 +6,5 @@ docker
 # Arquivos
 package-lock.json
 compose.yaml
+compose-dev.yaml
 
